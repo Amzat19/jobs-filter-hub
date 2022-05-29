@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import './index.css';
+import Header from './Header';
+import data from './data.json';
+import { useState } from 'react';
+import Jobs from './Jobs';
+import FilterBar from './FilterBar';
+import Footer from './Footer';
+
 
 function App() {
+  const [filtersArray, setFiltersArray] = useState([]);
+ 
+  const removeFilter = (index) => {
+    const newFiltersArray = [...filtersArray];
+    newFiltersArray.splice(index, 1);
+    setFiltersArray(newFiltersArray);
+  };
+
+  const clearFilter = () => {
+    const newFiltersArray = []; 
+    setFiltersArray(newFiltersArray);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App min-h-screen bg-cyanBg'>
+      <Header/>
+      <FilterBar filtersArray={filtersArray} removeFilter={removeFilter} clearFilter={clearFilter}/>
+      <Jobs filtersArray={filtersArray} setFiltersArray={setFiltersArray} data={data}/>
+      <Footer/>
     </div>
   );
 }
